@@ -12,7 +12,7 @@ app.use(express.json());
 // DB Connection
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
+.catch(err => console.log("Mongo Error:", err));
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
@@ -25,8 +25,17 @@ app.get("/", (req, res) => {
   res.json({ message: "Team Task Manager API Running 🚀" });
 });
 
+// Error handling
+process.on("uncaughtException", (err) => {
+  console.log("Uncaught Exception:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.log("Unhandled Rejection:", err);
+});
+
 // Server
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
