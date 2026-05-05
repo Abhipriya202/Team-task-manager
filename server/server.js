@@ -11,8 +11,8 @@ app.use(express.json());
 
 // DB Connection
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log("Mongo Error:", err));
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log("Mongo Error:", err));
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
@@ -34,9 +34,9 @@ process.on("unhandledRejection", (err) => {
   console.log("Unhandled Rejection:", err);
 });
 
-// Server
+// 🚀 IMPORTANT FIX FOR RAILWAY
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
